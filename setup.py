@@ -18,7 +18,7 @@ sys.path.append(os.path.join(PROJECT_DIR, 'src'))
 from oscar import get_version  # noqa isort:skip
 
 install_requires = [
-    'django>=3.1,<3.3',
+    'django>=3.2,<4.3',
     # PIL is required for image fields, Pillow is the "friendly" PIL fork
     'pillow>=6.0',
     # We use the ModelFormSetView from django-extra-views for the basket page
@@ -43,8 +43,8 @@ install_requires = [
     'django-widget-tweaks>=1.4.1',
 ]
 
-sorl_thumbnail_version = 'sorl-thumbnail>=12.6,<12.7'
-easy_thumbnails_version = 'easy-thumbnails>=2.7,<2.8'
+sorl_thumbnail_version = 'sorl-thumbnail>=12.9,<12.10'
+easy_thumbnails_version = 'easy-thumbnails>=2.7,<2.8.6'
 
 docs_requires = [
     'Sphinx>=4.2,<4.3',
@@ -65,6 +65,7 @@ test_requires = [
     'pytest-xdist>=2.2,<3',
     'tox>=3.21,<4',
     'freezegun>=1.1,<2',
+    'pytz',
     sorl_thumbnail_version,
     easy_thumbnails_version,
 ]
@@ -101,6 +102,7 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: Unix',

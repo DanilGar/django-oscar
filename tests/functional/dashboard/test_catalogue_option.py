@@ -91,6 +91,7 @@ class TestOptionDeleteView(PopUpObjectDeleteMixin, WebTestCase):
 
     def _get_delete_obj_response(self):
         form = self.get(self._get_url()).form
+        print(form, form.is_valid())
         return form.submit()
 
     def _create_dissalowed_object_factory(self):

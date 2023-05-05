@@ -234,11 +234,13 @@ class TestCategoryTemplateTags(TestCase):
             'Books', 'Fiction', 'Horror', 'Teen', 'Gothic', 'Comedy',
             'Non-fiction', 'Biography', 'Programming', 'Children'}
         actual_categories = self.get_category_names()
+        print(actual_categories)
         self.assertEqual(expected_categories, actual_categories)
 
     def test_categories_depth(self):
         expected_categories = {'Books'}
         actual_categories = self.get_category_names(depth=1)
+        print(actual_categories)
         self.assertEqual(expected_categories, actual_categories)
 
     def test_categories_parent(self):

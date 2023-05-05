@@ -598,7 +598,9 @@ class AbstractProduct(models.Model):
         """
         Test if this product has any stockrecords
         """
-        return self.stockrecords.exists()
+        if self.id:
+            return self.stockrecords.exists()
+        return False
 
     @property
     def num_stockrecords(self):
