@@ -283,17 +283,17 @@ class PopUpWindowDeleteMixin(PopUpWindowMixin):
 
         return ctx
 
-    def delete(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """
         Calls the delete() method on the fetched object and then
         redirects to the success URL, or closes the popup, it it is one.
         """
-        obj = self.get_object()
-
-        response = super().delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        form = self.get_form()
 
         if self.is_popup:
-            obj_id = obj.pk
+            obj_id = self.object.pk
+            super().form_valid(form)
             popup_response_data = json.dumps({
                 'action': 'delete',
                 'value': str(obj_id),
@@ -304,7 +304,7 @@ class PopUpWindowDeleteMixin(PopUpWindowMixin):
                 {'popup_response_data': popup_response_data, }
             )
         else:
-            return response
+            return super().form_valid(form)
 
 
 class LoginView(auth_views.LoginView):

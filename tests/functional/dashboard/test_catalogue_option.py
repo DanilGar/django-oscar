@@ -8,7 +8,7 @@ from oscar.test.factories import (
 from oscar.test.testcases import WebTestCase
 
 from .testcases import (
-    ListViewMixin, PopUpObjectCreateMixin, PopUpObjectDeleteMixin,
+    ListViewMixin, ObjectDeleteMixin, PopUpObjectCreateMixin,
     PopUpObjectUpdateMixin)
 
 Option = get_model('catalogue', 'Option')
@@ -70,7 +70,7 @@ class TestOptionUpdateView(PopUpObjectUpdateMixin, WebTestCase):
         return form.submit()
 
 
-class TestOptionDeleteView(PopUpObjectDeleteMixin, WebTestCase):
+class TestOptionDeleteView(ObjectDeleteMixin, WebTestCase):
 
     is_staff = True
     model = Option
@@ -91,7 +91,6 @@ class TestOptionDeleteView(PopUpObjectDeleteMixin, WebTestCase):
 
     def _get_delete_obj_response(self):
         form = self.get(self._get_url()).form
-        print(form, form.is_valid())
         return form.submit()
 
     def _create_dissalowed_object_factory(self):

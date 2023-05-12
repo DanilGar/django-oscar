@@ -215,12 +215,17 @@ class AbstractCategory(MP_Node):
         # Update ancestors_are_public for the sub tree.
         # note: This doesn't trigger a new save for each instance, rather
         # just a SQL update.
-        included_in_non_public_subtree = self.__class__.objects.filter(
-            is_public=False, path__rstartswith=OuterRef("path"), depth__lt=OuterRef("depth")
-        )
-        self.get_descendants_and_self().update(
-            ancestors_are_public=Exists(
-                included_in_non_public_subtree.values("id"), negated=True))
+        if self.is_root():
+            self.get_descendants_and_self().update(
+                ancestors_are_public=self.is_public
+            )
+        else:
+            included_in_public_subtree = self.__class__.objects.filter(
+                is_public=True, path__rstartswith=OuterRef("path"), depth__lt=OuterRef("depth")
+            )
+            self.get_descendants_and_self().update(
+                ancestors_are_public=Exists(
+                    included_in_public_subtree.values("id"), negated=True))
 
         # Correctly populate ancestors_are_public
         self.refresh_from_db()

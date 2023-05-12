@@ -603,7 +603,7 @@ class AbstractBasket(models.Model):
             matching_lines = self.lines.filter(product=product)
             quantity = matching_lines.aggregate(Sum('quantity'))['quantity__sum']
             return quantity or 0
-        
+
         return 0
 
     def line_quantity(self, product, stockrecord, options=None):

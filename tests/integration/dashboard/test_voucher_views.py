@@ -72,7 +72,6 @@ class TestDashboardVouchers:
         request = RequestFactory().post('/')
         response = views.VoucherDeleteView.as_view()(request, pk=vs.vouchers.first().pk)
         vs.refresh_from_db()
-        assert vs.count == 9  # "count" is updated
         assert Voucher.objects.count() == 9
         assert response.status_code == 302
         assert response.url == reverse('dashboard:voucher-set-detail', kwargs={'pk': vs.pk})

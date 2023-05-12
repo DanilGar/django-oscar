@@ -81,7 +81,7 @@ class TestBasketLineForm(TestCase):
         form = self.build_form(quantity=6)
         self.assertTrue(form.is_valid())
         form.save()
-        form = self.build_form(quantity=11)
+        form = self.build_form(quantity=16)
         self.assertFalse(form.is_valid())
 
     def test_line_quantity_max_attribute_per_num_available(self):

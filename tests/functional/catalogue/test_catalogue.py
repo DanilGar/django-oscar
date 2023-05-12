@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext
 
+from oscar.apps.catalogue.categories import create_from_breadcrumbs
 from oscar.apps.catalogue.models import Category
 from oscar.test.factories import create_product
 from oscar.test.testcases import WebTestCase
@@ -131,13 +132,15 @@ class TestProductCategoryView(WebTestCase):
         self.assertTrue(self.category.get_absolute_url() in response.location)
 
     def test_is_public_off(self):
-        category = Category.add_root(name="Foobars", is_public=False)
+        category = create_from_breadcrumbs("Foobars")
+        category.is_public = False
+        category.save()
         response = self.app.get(category.get_absolute_url(), expect_errors=True)
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
         return category
 
     def test_is_public_on(self):
-        category = Category.add_root(name="Barfoos", is_public=True)
+        category = create_from_breadcrumbs("Barfoos")
         response = self.app.get(category.get_absolute_url())
         self.assertEqual(http_client.OK, response.status_code)
         return category
@@ -145,6 +148,7 @@ class TestProductCategoryView(WebTestCase):
     def test_browsable_contains_public_child(self):
         "If the parent is public the child should be in browsable if it is public as well"
         cat = self.test_is_public_on()
+        self.assertTrue(cat.ancestors_are_public)
         child = cat.add_child(name="Koe", is_public=True)
         self.assertTrue(child in Category.objects.all().browsable())
 

@@ -357,14 +357,12 @@ class ObjectDeleteMixin(ResponseObjectMixin):
         self._test_deletion_of_objects()
         # Test the response
         self._test_success_response()
-        
+
     def _get_delete_obj_response(self):
         raise NotImplementedError
 
     def _test_deletion_of_objects(self):
         # Test the deletion of an object
-        print(self.model.objects.all())
-        print(self.model.objects.exists())
         obj_exists = self.model.objects.exists()
         self.assertFalse(obj_exists)
 
